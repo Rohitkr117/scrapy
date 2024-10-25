@@ -206,7 +206,8 @@ class MediaPipeline(ABC):
             # minimize cached information for failure
             result.cleanFailure()
             result.frames = []
-            result.stack = []
+            if twisted.version.major < 24 or (twisted.version.major == 24 and twisted.version.minor < 10):
+                result.stack = []
 
             # This code fixes a memory leak by avoiding to keep references to
             # the Request and Response objects on the Media Pipeline cache.
